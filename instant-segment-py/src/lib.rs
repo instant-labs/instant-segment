@@ -140,12 +140,8 @@ impl Search {
 
     /// Return the next closest point
     fn __next__(mut slf: PyRefMut<Self>) -> Option<String> {
-        let idx = match &slf.cur {
-            Some(idx) => *idx,
-            None => return None,
-        };
-
-        let word = match slf.inner.get(idx) {
+        let idx = slf.cur.as_ref()?;
+        let word = match slf.inner.get(*idx) {
             Some(word) => String::from(word),
             None => {
                 slf.cur = None;
